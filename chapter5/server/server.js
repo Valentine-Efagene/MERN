@@ -2,6 +2,7 @@ const fs = require('fs');
 const { GraphQLScalarType } = require('graphql');
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+const { UserInputError } = require('apollo-server-express');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
 const url = 'mongodb://localhost/issuetracker';
@@ -59,7 +60,7 @@ async function getNextSequence(name) {
 
 async function issueAdd (_, { issue }) {
   const errors = [];
-  //validateIssue(issue);
+  validateIssue(issue);
   issue.created = new Date();
   issue.id = await getNextSequence('issues');
   const result = await db.collection('issues').insertOne(issue);
@@ -68,7 +69,7 @@ async function issueAdd (_, { issue }) {
   return savedIssue;
 }
 
-function validateIssue(_, { issue }) {
+function validateIssue(issue) {
   const errors = [];
   if (issue.title.length < 3) {
     errors.push('Field "title" must be at least 3 characters long.')
