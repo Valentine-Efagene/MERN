@@ -1,0 +1,32 @@
+{
+  "name": "pro-mern-stack-2",
+  "version": "1.0.0",
+  "description": "Examples from a book",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -w uiserver.js uiserver.js",
+    "compile": "babel src --out-dir public",
+    "watch": "babel src --out-dir public --watch --verbose",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Valentine Efagene",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "eslint-config-prettier": "^6.10.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.21.0",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0"
+  }
+}
