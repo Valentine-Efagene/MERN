@@ -1,0 +1,24 @@
+1. Compile jsx:
+npx babel src --out-dir public
+
+2. Install mongoDB:
+https://docs.mongodb.com/v3.6/tutorial/install-mongodb-on-debian/
+
+3. Start mongodb server:
+sudo systemctl status mongod
+
+4. Check status:
+sudo systemctl status mongod
+
+5. Mongo start on startup:
+sudo systemctl enable mongod
+
+6. Stop mongo:
+sudo systemctl stop mongod
+
+7. Restart Mongo:
+sudo systemctl restart mongod
+
+8. Start mongo shell:
+i. mongo
+ii. mongo --host 127.0.0.1:27017
