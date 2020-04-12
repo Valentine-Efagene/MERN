@@ -22,3 +22,16 @@ sudo systemctl restart mongod
 8. Start mongo shell:
 i. mongo
 ii. mongo --host 127.0.0.1:27017
+
+9. Webpack:
+i. Production: npx webpack public/App.js --output public/app.bundle.js --mode production
+ii. Development: npx webpack public/App.js --output public/app.bundle.js --mode development
+
+10. Webpack watch:
+npx webpack --watch
+
+11. Start:
+i. Production: npm run compile + npm run start
+ii. Development: npm run start
+iii. Either: npm run watch + npm run start, ENABLE_HMR=false
+
