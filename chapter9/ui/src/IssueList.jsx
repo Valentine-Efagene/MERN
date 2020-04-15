@@ -12,10 +12,12 @@ export default class IssueList extends React.Component {
     this.createIssue = this.createIssue.bind(this);
   }
 
+  // Life cylcle method
   componentDidMount() {
     this.loadData();
   }
 
+  // Life cylcle method
   componentDidUpdate(prevProps) {
     const {
       location: { search: prevSearch },

@@ -5,6 +5,8 @@ import IssueList from './IssueList.jsx';
 import IssueReport from './IssueReport.jsx';
 import IssueEdit from './IssueEdit.jsx';
 
+// http://localhost:8000/#/report for issue report
+
 const NotFound = () => <h1> Page Not Found </h1>;
 
 export default function Contents() {
