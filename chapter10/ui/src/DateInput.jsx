@@ -1,11 +1,15 @@
+/*
+date.toISOString() did not work; so, I resorted to date.toDateString()
+*/
+
 import React from 'react';
 
 function displayFormat(date) {
-  return date != null ? date.toDateString() : '';
+  return date != null ? date.toString() : '';
 }
 
 function editFormat(date) {
-  return date != null ? date.toISOString().substr(0, 10) : '';
+  return date != null ? date.toString().substr(0, 10) : '';
 }
 
 function unformat(str) {
@@ -21,6 +25,10 @@ export default class DateInput extends React.Component {
       focused: false,
       valid: true,
     };
+
+    console.log(this.props);
+    console.log(this.state);
+
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -35,9 +43,11 @@ export default class DateInput extends React.Component {
     const { onValidityChange, onChange } = this.props;
     const dateValue = unformat(value);
     const valid = value === '' || dateValue != null;
+
     if (valid !== oldValid && onValidityChange) {
       onValidityChange(e, valid);
     }
+
     this.setState({ focused: false, valid });
     if (valid) onChange(e, dateValue);
   }
