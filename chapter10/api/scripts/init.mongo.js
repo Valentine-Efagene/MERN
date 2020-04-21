@@ -12,6 +12,8 @@
 /* global db print */
 /* eslint no-restricted-globals: "off" */
 
+// mongo issuetracker scripts/init.mongo.js
+
 db.issues.remove({});
 db.deleted_issues.remove({});
 

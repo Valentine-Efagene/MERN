@@ -12,11 +12,13 @@ export default class IssueList extends React.Component {
     super();
     this.state = { issues: [] };
     this.createIssue = this.createIssue.bind(this);
+    this.deleteIssue = this.deleteIssue.bind(this);
   }
 
   // Life cylcle method
   componentDidMount() {
     this.loadData();
+    this.closeIssue.bind(this);
   }
 
   // Life cylcle method
@@ -29,6 +31,66 @@ export default class IssueList extends React.Component {
     } = this.props;
 
     if (prevSearch !== search) {
+      this.loadData();
+    }
+  }
+
+  async createIssue(issue) {
+    const query = `mutation issueAdd($issue: IssueInputs!) {
+             issueAdd(issue: $issue) {
+               id
+             }
+           }`;
+
+    const data = await graphQLFetch(query, { issue });
+
+    if (data) {
+      this.loadData();
+    }
+  }
+
+  async closeIssue(index) {
+    const query = `mutation issueClose($id: Int!) {
+      issueUpdate(id: $id, changes: {status: Closed}) {
+        id title status owner effort created due description
+      }
+    }`;
+
+    const { issues } = this.state;
+    const data = await graphQLFetch(query, { id: issues[index].id });
+
+    if (data) {
+      this.setState((prevState) => {
+        const newList = [...prevState.issues];
+        newList[index] = data.issueUpdate;
+        return { issues: newList };
+      });
+    } else {
+      this.loadData();
+    }
+  }
+
+  async deleteIssue(index) {
+    const query = `mutation issueDelete($id: Int!) {
+      issueDelete(id: $id)
+    }`;
+    const { issues } = this.state;
+    const {
+      location: { pathname, search },
+      history,
+    } = this.props;
+    const { id } = issues[index];
+    const data = await graphQLFetch(query, { id });
+    if (data && data.issueDelete) {
+      this.setState((prevState) => {
+        const newList = [...prevState.issues];
+        if (pathname === `/issues/${id}`) {
+          history.push({ pathname: '/issues', search });
+        }
+        newList.splice(index, 1);
+        return { issues: newList };
+      });
+    } else {
       this.loadData();
     }
   }
@@ -70,20 +132,6 @@ export default class IssueList extends React.Component {
     }
   }
 
-  async createIssue(issue) {
-    const query = `mutation issueAdd($issue: IssueInputs!) {
-             issueAdd(issue: $issue) {
-               id
-             }
-           }`;
-
-    const data = await graphQLFetch(query, { issue });
-
-    if (data) {
-      this.loadData();
-    }
-  }
-
   render() {
     const { issues } = this.state;
     const { match } = this.props;
@@ -92,7 +140,11 @@ export default class IssueList extends React.Component {
         <h1>Issue Tracker</h1>
         <IssueFilter />
         <hr />
-        <IssueTable issues={issues} />
+        <IssueTable
+          issues={issues}
+          closeIssue={this.closeIssue}
+          deleteIssue={this.deleteIssue}
+        />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
         <hr />
