@@ -23,10 +23,12 @@ async function get(_, { id }) {
 async function add(_, { issue }) {
   const db = getDb();
   validate(issue);
+
   const newIssue = Object.assign({}, issue);
   newIssue.created = new Date();
   newIssue.id = await getNextSequence('issues');
-  const result = await db.collection('issues').insertOne(issue);
+  console.log(`Next sequence = ${newIssue.id}`);
+  const result = await db.collection('issues').insertOne(newIssue);
   const savedIssue = await db
     .collection('issues')
     .findOne({ _id: result.insertedId });
