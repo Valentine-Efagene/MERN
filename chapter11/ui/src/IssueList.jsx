@@ -79,7 +79,7 @@ export default class IssueList extends React.Component {
       history,
     } = this.props;
     const { id } = issues[index];
-    const data = await graphQLFetch(query, { id });
+    const data = await graphQLFetch(query, { id }, this.showError);
     if (data && data.issueDelete) {
       this.setState((prevState) => {
         const newList = [...prevState.issues];
@@ -145,7 +145,7 @@ export default class IssueList extends React.Component {
 
     // { "effortMin": 5, "effortMax": 15}
 
-    const data = await graphQLFetch(query, vars);
+    const data = await graphQLFetch(query, vars, this.showError);
 
     if (data) {
       this.setState({ issues: data.issueList });

@@ -74,7 +74,7 @@ class IssueAddNavItem extends React.Component {
 
     if (data) {
       const { history } = this.props;
-      history.push(`./edit/$(data.issueAdd.id)`);
+      history.push(`./edit/${data.issueAdd.id}`);
     }
   }
 
