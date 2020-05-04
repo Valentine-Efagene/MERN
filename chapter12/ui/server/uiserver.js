@@ -13,7 +13,7 @@ dotenv.config();
 const apiProxyTarget = process.env.API_PROXY_TARGET;
 
 if (apiProxyTarget) {
-  app.use('graphql', proxy({ target: apiProxyTarget }));
+  app.use('/graphql', proxy({ target: apiProxyTarget }));
 }
 
 const enableHMR = (process.env.ENABLE_HMR || 'true') === 'true';
