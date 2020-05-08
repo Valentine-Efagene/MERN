@@ -10,17 +10,30 @@ import {
   Table,
 } from 'react-bootstrap';
 
-const IssueRow = withRouter(
-  ({ issue, location: { search }, closeIssue, deleteIssue, index }) => {
+import UserContext from './UserContext.js';
+
+// eslint-disable-next-line react/prefer-stateless-function
+class IssueRowPlain extends React.Component {
+  render() {
+    const {
+      issue,
+      location: { search },
+      closeIssue,
+      deleteIssue,
+      index,
+    } = this.props;
+    const user = this.context;
+    const disabled = !user.signedIn;
+
     const selectLocation = { pathname: `/issues/${issue.id}`, search };
+    const editTooltip = (
+      <Tooltip id='close-tooltip' placement='top'>
+        Edit Issue
+      </Tooltip>
+    );
     const closeTooltip = (
       <Tooltip id='close-tooltip' placement='top'>
         Close Issue
-      </Tooltip>
-    );
-    const editTooltip = (
-      <Tooltip id='edit-tooltip' placement='top'>
-        Edit Issue
       </Tooltip>
     );
     const deleteTooltip = (
@@ -57,12 +70,12 @@ const IssueRow = withRouter(
             </OverlayTrigger>
           </LinkContainer>{' '}
           <OverlayTrigger delayShow={1000} overlay={closeTooltip}>
-            <Button bsSize='xsmall' onClick={onClose}>
+            <Button disabled={disabled} bsSize='xsmall' onClick={onClose}>
               <Glyphicon glyph='remove' />
             </Button>
           </OverlayTrigger>{' '}
           <OverlayTrigger delayShow={1000} overlay={deleteTooltip}>
-            <Button bsSize='xsmall' onClick={onDelete}>
+            <Button disabled={disabled} bsSize='xsmall' onClick={onDelete}>
               <Glyphicon glyph='trash' />
             </Button>
           </OverlayTrigger>
@@ -72,7 +85,11 @@ const IssueRow = withRouter(
 
     return <LinkContainer to={selectLocation}>{tableRow}</LinkContainer>;
   }
-);
+}
+
+IssueRowPlain.contextType = UserContext;
+const IssueRow = withRouter(IssueRowPlain);
+delete IssueRow.contextType;
 
 export default function IssueTable({ issues, closeIssue, deleteIssue }) {
   const issueRows = issues.map((issue, index) => (
