@@ -13,6 +13,7 @@ export default async function graphQLFetch(
   try {
     const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });

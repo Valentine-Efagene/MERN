@@ -96,7 +96,6 @@ class IssueEdit extends React.Component {
       },
     } = this.props;
     const data = await graphQLFetch(query, { id }, showError);
-
     this.setState({ issue: data ? data.issue : {}, invalidFields: {} });
   }
 
