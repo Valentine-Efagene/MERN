@@ -27,7 +27,7 @@
     "bootstrap": "^3.4.1",
     "dotenv": "^6.2.0",
     "eslint-config-prettier": "^6.10.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "http-proxy-middleware": "^0.21.0",
     "isomorphic-fetch": "^2.2.1",
     "nodemon": "^1.19.4",
